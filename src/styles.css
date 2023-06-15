@@ -1,0 +1,52 @@
+html {
+  height: 100vh;
+  width: 100vw;
+}
+body {
+  margin:0;
+  display: grid;
+  grid-template-columns: repeat(4, 25vw);
+  grid-template-rows: repeat(5, 20vh);
+  grid-template-areas: 
+    "header header header header"
+    "sideBar content content content"
+    "sideBar content content content"
+    "sideBar content content content"
+    "sideBar content content content";
+}
+#header {
+  grid-area: header;
+  background-color: red;
+}
+#sideBar {
+  display: flex;
+  flex-direction: column;
+  grid-area: sideBar;
+  background-color: blue;
+  align-items: center;
+}
+#sideBar button {
+  width: 15vw;
+  height:5vh;
+}
+#content {
+  grid-area: content;
+  background-color: green;
+}
+#newProjectOverlay {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,.7);
+}
+#newProjectOverlay form {
+  display: flex;
+  flex-direction: column;
+}
+#newProjectOverlay button {
+  width: 15vw;
+  height: 3vh;
+}
