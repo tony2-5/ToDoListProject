@@ -1,5 +1,6 @@
 import newProjectOverlay from "./newProjectOverlay.js";
 import {project, allProjects} from "./toDoClasses.js";
+import generateContent from "./content.js";
 
 // displays our dynamically generated sidebar
 export const sideBarBody = (() => {
@@ -28,12 +29,19 @@ function initializeDefaultProject() {
     const div = document.createElement("div");
     const h3 = document.createElement("h3");
     h3.textContent = defaultProject.projectName;
-    div.setAttribute("id","defaultProject");
-    div.addEventListener("click", currentSelectedProject(defaultProject.projectName));
+    div.setAttribute("id","selectedProject");
+    // event listener to generate todo items for project in content
+    div.addEventListener("click",() => {
+      document.querySelector("#selectedProject").removeAttribute("id");
+      div.setAttribute("id","selectedProject");
+      currentSelectedProject(defaultProject)
+      generateContent(defaultProject)
+    });
     div.appendChild(h3);
 
     const sideBar = document.getElementById("sideBar");
     sideBar.appendChild(div);
+    generateContent(defaultProject);
 }
 
 // initializes a new project to display on the sideBar by first calling
@@ -60,8 +68,13 @@ function displayProjects() {
     const h3 = document.createElement("h3");
     h3.textContent = element.projectName;
     div.setAttribute("class","projects");
-    // TODO: might be error in future
-    div.addEventListener("click", currentSelectedProject(element.projectName));
+    // event listener to generate todo items for project in content
+    div.addEventListener("click",() => {
+      document.querySelector("#selectedProject").removeAttribute("id");
+      div.setAttribute("id","selectedProject");
+      currentSelectedProject(element)
+      generateContent(element)
+    });
     div.appendChild(h3);
 
     const sideBar = document.getElementById("sideBar");

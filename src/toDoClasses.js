@@ -44,7 +44,7 @@ export class allProjects {
       }
     }
   }
-  setCurrentProject(currentProjectName) {
-    allProjects.#currentProjectName = currentProjectName;
+  setCurrentProject(project) {
+    allProjects.#currentProjectName = project.projectName;
   }
 }

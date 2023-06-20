@@ -2,6 +2,7 @@ import newToDoForm from "./newToDoForm.js";
 import { allProjects, project, toDoItem } from "./toDoClasses.js";
 
 export default function generateContent(project) {
+  clearContent();
   newToDoForm();
   toDoItems(project);
 };
