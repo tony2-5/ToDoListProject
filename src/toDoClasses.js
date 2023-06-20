@@ -27,13 +27,24 @@ export class toDoItem {
 // class storing all the project class instances
 export class allProjects {
   static #projectArray = []
+  static #currentProjectName = "Main";
   addProject(project) {
     allProjects.#projectArray.push(project);
   }
   removeProject(project) {
-    allProjects.#projectArray = allProjects.projectArray.filter(item => item.projectName !== project.projectName);
+    allProjects.#projectArray = allProjects.#projectArray.filter(item => item.projectName !== project.projectName);
   }
   getProjects() {
     return allProjects.#projectArray;
+  }
+  getCurrentProject() {
+    for(let i = 0;i<allProjects.#projectArray.length; i++) {
+      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName) {
+        return allProjects.#projectArray[i];
+      }
+    }
+  }
+  setCurrentProject(currentProjectName) {
+    allProjects.#currentProjectName = currentProjectName;
   }
 }

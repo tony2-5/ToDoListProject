@@ -1,4 +1,4 @@
-import {project, allProjects} from "./toDoClasses.js";
+import { initializeNewProject } from "./sideBar.js";
 
 export default function newProjectOverlay() {
   // overlay elements
@@ -24,9 +24,15 @@ export default function newProjectOverlay() {
   // button attributes
   submitButton.textContent = "Submit";
   submitButton.addEventListener("click",(e) => {
-    e.preventDefault();
-    initializeNewProject(input.value);
-    form.reset();
+    // ensure project name isnt empty
+    if(input.value.trim().length === 0) {
+      e.preventDefault();
+      alert("Project name cannot be empty!");
+    } else {
+      e.preventDefault();
+      initializeNewProject(input.value);
+      form.reset();
+    }
   });
   closeFormButton.textContent = "Close";
   closeFormButton.addEventListener("click", () => {
@@ -36,30 +42,4 @@ export default function newProjectOverlay() {
   form.append(label, input, submitButton, closeFormButton);
   div.appendChild(form);
   document.body.appendChild(div);
-}
-
-const initializeNewProject = (projectName) => {
-  const allProject = new allProjects()
-  allProject.addProject(new project(projectName))
-  clearProjects();
-  displayProjects();
-}
-
-// function to display our available projects
-function displayProjects() {
-  const projects = new allProjects();
-  projects.getProjects().forEach(element => {
-    const div = document.createElement("div");
-    const h3 = document.createElement("h3");
-    h3.textContent = element.projectName;
-    div.setAttribute("class","projects");
-    div.appendChild(h3);
-    
-    const sideBar = document.getElementById("sideBar");
-    sideBar.appendChild(div);
-  });
-}
-// clears projects to prevent duplication when running the displayProjects function
-function clearProjects() {
-  document.querySelectorAll('.projects').forEach(e => e.remove());
 }

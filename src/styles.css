@@ -33,6 +33,36 @@ body {
   grid-area: content;
   background-color: green;
 }
+.toDoItem {
+  display: flex;
+  gap:3vw;
+  background-color: lightcoral;
+  border-radius: 10px;
+}
+#addToDo {
+  display: flex;
+}
+#addToDo form {
+  background-color: lightgreen;
+  padding-right: 3vw;
+  padding-left: 3vw;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+  border-radius: 10px;
+  gap: 3vw;
+  display: flex;
+  justify-content: center;
+}
+#addToDo form div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#addToDo form button {
+  align-self: center;
+  width: 5vw;
+  height: 4vh;
+}
 #newProjectOverlay {
   position: absolute;
   height: 100vh;
