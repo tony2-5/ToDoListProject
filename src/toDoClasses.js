@@ -8,7 +8,7 @@ export class project {
     this.itemArr.push(toDoItem);
   }
   removeToDo(toDoItem) {
-    itemArr = itemArr.filter(item => item.key !== toDoItem.key);
+    this.itemArr = this.itemArr.filter(item => item.key !== toDoItem.key);
   }
 }
 
@@ -44,7 +44,21 @@ export class allProjects {
       }
     }
   }
+  getCurrentProjectIndex() {
+    for(let i = 0;i<allProjects.#projectArray.length; i++) {
+      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName) {
+        return i;
+      }
+    }
+  }
   setCurrentProject(project) {
     allProjects.#currentProjectName = project.projectName;
+  }
+  includesProject(projectName) {
+    if(allProjects.#projectArray.find(element => element.projectName === projectName) != undefined) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

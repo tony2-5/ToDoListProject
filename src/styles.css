@@ -38,6 +38,7 @@ body {
   gap:3vw;
   background-color: lightcoral;
   border-radius: 10px;
+  align-items: center;
 }
 #addToDo {
   display: flex;
@@ -79,6 +80,10 @@ body {
 #newProjectOverlay button {
   width: 15vw;
   height: 3vh;
+}
+.projects {
+  display: flex;
+  align-items: center;
 }
 #selectedProject {
   border-style: inset;

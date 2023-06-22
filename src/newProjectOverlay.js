@@ -1,4 +1,5 @@
 import { initializeNewProject } from "./sideBar.js";
+import { allProjects } from "./toDoClasses.js";
 
 export default function newProjectOverlay() {
   // overlay elements
@@ -24,11 +25,17 @@ export default function newProjectOverlay() {
   // button attributes
   submitButton.textContent = "Submit";
   submitButton.addEventListener("click",(e) => {
+    const projects = new allProjects();
     // ensure project name isnt empty
     if(input.value.trim().length === 0) {
       e.preventDefault();
       alert("Project name cannot be empty!");
-    } else {
+    } // check to prevent duplicate project names 
+    else if(projects.includesProject(input.value)) {
+      e.preventDefault();
+      alert("Can not have duplicate project!");
+    }
+    else {
       e.preventDefault();
       initializeNewProject(input.value);
       form.reset();

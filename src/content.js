@@ -1,5 +1,6 @@
 import newToDoForm from "./newToDoForm.js";
-import { allProjects, project, toDoItem } from "./toDoClasses.js";
+import { allProjects, toDoItem } from "./toDoClasses.js";
+import trashImg from "./imgs/trash.svg";
 
 export default function generateContent(project) {
   clearContent();
@@ -17,15 +18,22 @@ export function formSubmit(e) {
   const allProject= new allProjects();
   const formData = new FormData(e.target.form);
   addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), formData.get("dueDate"),formData.get("priority")));
-  clearContent();
   generateContent(allProject.getCurrentProject());
   e.target.form.reset();
 }
 
 // display toDoItems in content area
 function toDoItems(project) {
+  const allProject= new allProjects();
   project.itemArr.forEach(element => {
     // dom element for each todo item for a project
+    const trash = new Image(20,20);
+    trash.src = trashImg;
+    // event listener to delete todo item
+    trash.addEventListener("click", () => {
+      project.removeToDo(element);
+      generateContent(project);
+    })
     const content = document.getElementById("content");
     const div = document.createElement("div");
     div.setAttribute("class", "toDoItem");
@@ -37,7 +45,7 @@ function toDoItems(project) {
     dueDate.textContent = element.dueDate;
     const priority =  document.createElement("h2");
     priority.textContent = element.priority;
-    div.append(title, description, dueDate, priority);
+    div.append(title, description, dueDate, priority, trash);
     content.appendChild(div);
   });
 }
