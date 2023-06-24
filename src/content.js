@@ -1,6 +1,6 @@
 import newToDoForm from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
-import trashImg from "./imgs/trash.svg";
+import { toDoItemOverlay } from "./toDoItemOverlay.js";
 
 export default function generateContent(project) {
   clearContent();
@@ -24,28 +24,22 @@ export function formSubmit(e) {
 
 // display toDoItems in content area
 function toDoItems(project) {
-  const allProject= new allProjects();
   project.itemArr.forEach(element => {
-    // dom element for each todo item for a project
-    const trash = new Image(20,20);
-    trash.src = trashImg;
-    // event listener to delete todo item
-    trash.addEventListener("click", () => {
-      project.removeToDo(element);
-      generateContent(project);
-    })
+    //open edit overlay
+    const overlayButton = document.createElement("button");
+    overlayButton.textContent = "View To-Do";
+    overlayButton.addEventListener("click", () => {
+      toDoItemOverlay(element, project);
+    });
+
     const content = document.getElementById("content");
     const div = document.createElement("div");
     div.setAttribute("class", "toDoItem");
     const title = document.createElement("h2");
     title.textContent = element.title;
-    const description = document.createElement("h2");
-    description.textContent = element.description;
     const dueDate = document.createElement("h2");
     dueDate.textContent = element.dueDate;
-    const priority =  document.createElement("h2");
-    priority.textContent = element.priority;
-    div.append(title, description, dueDate, priority, trash);
+    div.append(title, dueDate, overlayButton);
     content.appendChild(div);
   });
 }

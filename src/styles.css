@@ -88,3 +88,25 @@ body {
 #selectedProject {
   border-style: inset;
 }
+#toDoOverlay {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,.7);
+}
+#toDoOverlayInnerDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 25vw;
+  padding: 5vw;
+  border-radius: 10px;
+  z-index: 1;
+}
+#toDoOverlayInnerDiv p {
+  word-break: break-all;
+}
