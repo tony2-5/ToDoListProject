@@ -1,3 +1,4 @@
+import { parse,format } from 'date-fns';
 import newToDoForm from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
 import { toDoItemOverlay } from "./toDoItemOverlay.js";
@@ -8,7 +9,7 @@ export default function generateContent(project) {
   toDoItems(project);
 };
 
-//adToDo to project class instance
+//addToDo to project class instance
 function addToDo(project, toDoItem) {
   project.addToDo(toDoItem);
 }
@@ -17,7 +18,10 @@ export function formSubmit(e) {
   e.preventDefault();
   const allProject= new allProjects();
   const formData = new FormData(e.target.form);
-  addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), formData.get("dueDate"),formData.get("priority")));
+  if(!formData.get("dueDate"))
+    addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), null,formData.get("priority")));
+  else
+    addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), format(parse(formData.get("dueDate"), 'yyyy-mm-dd', new Date()),'mm/dd/yyyy'),formData.get("priority")));
   generateContent(allProject.getCurrentProject());
   e.target.form.reset();
 }

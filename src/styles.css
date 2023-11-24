@@ -107,6 +107,11 @@ body {
   border-radius: 10px;
   z-index: 1;
 }
+#toDoOverlayInnerDiv div {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
 #toDoOverlayInnerDiv p {
   word-break: break-all;
 }

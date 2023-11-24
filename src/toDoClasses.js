@@ -31,7 +31,7 @@ export class toDoItem {
   setdueDate(dueDate) {
     this.dueDate = dueDate;
   }
-  setTitle(priority) {
+  setPriority(priority) {
     this.priority = priority;
   }
 }
