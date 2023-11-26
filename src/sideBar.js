@@ -1,13 +1,21 @@
 import newProjectOverlay from "./newProjectOverlay.js";
 import {project, allProjects} from "./toDoClasses.js";
 import generateContent from "./content.js";
+import { setLocalStorage,persistData } from "./webStorageFunc.js";
 import trashImg from "./imgs/trash.svg";
 
 // displays our dynamically generated sidebar
 export const sideBarBody = (() => {
-  initializeDefaultProject();
-  displayProjects();
-  createNewProject();
+  if(!localStorage.getItem("projects")) {
+    initializeDefaultProject();
+    displayProjects();
+    createNewProject();
+  } else {
+    persistData();
+    initializeDefaultProject();
+    createNewProject();
+    displayProjects();
+  }
 })() 
 
 // function to add more projects
@@ -24,11 +32,24 @@ function createNewProject() {
 
 function initializeDefaultProject() {
     const allProject = new allProjects()
-    const defaultProject = new project("Main")
-    allProject.addProject(defaultProject);
-    
     const div = document.createElement("div");
     const h3 = document.createElement("h3");
+    let defaultProject;
+    // update local storage
+    if(!localStorage.getItem("projects")) {
+      defaultProject = new project("Main")
+      console.log("in func");
+      allProject.addProject(defaultProject);
+      setLocalStorage();
+    } else {
+      // set up default project to be default project from local storage and assign project type to object
+      defaultProject = JSON.parse(localStorage.getItem("projects"))[0];
+      defaultProject = Object.assign(new project(),defaultProject);
+      defaultProject.assignToDoClass();
+      // need to replace main project in project array after doing Object assign
+      allProject.replaceMainProject(defaultProject);
+    }
+    console.log(defaultProject);
     h3.textContent = defaultProject.projectName;
     div.setAttribute("id","selectedProject");
     div.setAttribute("class","defaultProject");
@@ -50,6 +71,9 @@ function initializeDefaultProject() {
 export const initializeNewProject = (projectName) => {
   const allProject = new allProjects()
   allProject.addProject(new project(projectName))
+  // update local storage
+  setLocalStorage();
+
   clearProjects();
   displayProjects();
   // reinitializes id attribute for our current selected project
@@ -68,9 +92,8 @@ function clearProjects() {
 function displayProjects() {
   const projects = new allProjects();
   projects.getProjects().forEach(element => {
-    if(element.projectName === "Main") {
+    if(element.projectName === "Main")
       return;
-    }
     const div = document.createElement("div");
     const trash = new Image(20,20);
     trash.src = trashImg;
@@ -79,6 +102,8 @@ function displayProjects() {
     // if project currently on deleted defaults to Main, otherwise stays on current project
     trash.addEventListener("click",(e) => {
       projects.removeProject(element);
+      // update local storage
+      setLocalStorage();
       if(e.target.parentElement.hasAttribute("id")) {
         currentSelectedProject(projects.getProjects()[0]);
         generateContent(projects.getProjects()[0])
@@ -101,6 +126,7 @@ function displayProjects() {
 
     // event listener to generate todo items for project in content
     h3.addEventListener("click",() => {
+      console.log(element);
       document.querySelector("#selectedProject").removeAttribute("id");
       currentSelectedProject(element)
       // reinitializes id attribute for our current selected project
@@ -108,6 +134,7 @@ function displayProjects() {
       if(projects.getCurrentProjectIndex() !== 0) {
         document.getElementById("sideBar").children[1+projects.getCurrentProjectIndex()].setAttribute("id","selectedProject");
       }
+      console.log(element);
       generateContent(element)
     });
     div.append(h3, trash);

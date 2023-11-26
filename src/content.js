@@ -2,6 +2,7 @@ import { parse,format } from 'date-fns';
 import newToDoForm from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
 import { toDoItemOverlay } from "./toDoItemOverlay.js";
+import { persistData, setLocalStorage } from './webStorageFunc.js';
 
 export default function generateContent(project) {
   clearContent();
@@ -18,10 +19,14 @@ export function formSubmit(e) {
   e.preventDefault();
   const allProject= new allProjects();
   const formData = new FormData(e.target.form);
-  if(!formData.get("dueDate"))
+  if(!formData.get("dueDate")) {
     addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), null,formData.get("priority")));
+  }
   else
     addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), format(parse(formData.get("dueDate"), 'yyyy-mm-dd', new Date()),'mm/dd/yyyy'),formData.get("priority")));
+  //update local storage
+  setLocalStorage()
+  
   generateContent(allProject.getCurrentProject());
   e.target.form.reset();
 }

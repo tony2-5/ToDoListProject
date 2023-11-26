@@ -1,11 +1,11 @@
 import { parse,format } from 'date-fns';
 import { project } from "./toDoClasses.js";
 import generateContent from "./content.js";
+import { setLocalStorage } from "./webStorageFunc.js";
 import trashImg from "./imgs/trash.svg";
 import editButton from "./imgs/editButton.svg";
 
 export function toDoItemOverlay(toDoItem, project) {
-  console.log("insidetest");
   const div = document.createElement("div");
   div.setAttribute("id","toDoOverlay");
 
@@ -16,6 +16,8 @@ export function toDoItemOverlay(toDoItem, project) {
   trash.addEventListener("click", () => {
     closeOverlay()
     project.removeToDo(toDoItem);
+    //update local storage
+    setLocalStorage();
     generateContent(project);
   })
 
@@ -34,7 +36,6 @@ export function toDoItemOverlay(toDoItem, project) {
   const title = document.createElement("h2");
   title.textContent = toDoItem.title;
   editButtonArr[0].addEventListener("click", () => {
-    console.log("test");
     // form
     const form = document.createElement("form");
     // input element for updating data

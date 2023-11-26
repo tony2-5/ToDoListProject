@@ -10,6 +10,12 @@ export class project {
   removeToDo(toDoItem) {
     this.itemArr = this.itemArr.filter(item => item.key !== toDoItem.key);
   }
+  assignToDoClass() {
+    for(let i = 0;i<this.itemArr.length; i++) {
+      // giving persisted projects item array objects the toDoItem classes properties
+      this.itemArr[i] = Object.assign(new toDoItem(),this.itemArr[i]);
+    }
+  }
 }
 
 // toDoItem class allowing to create our toDo's
@@ -49,28 +55,36 @@ export class allProjects {
   getProjects() {
     return allProjects.#projectArray;
   }
-  getCurrentProject() {
-    for(let i = 0;i<allProjects.#projectArray.length; i++) {
-      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName) {
-        return allProjects.#projectArray[i];
-      }
+  persistProjects(projectArr) {
+    for(let i = 0;i<projectArr.length; i++) {
+      // giving persisted projects the classes properties
+      let target = Object.assign(new project(),projectArr[i]);
+      target.assignToDoClass();
+      this.addProject(target);
     }
   }
+  replaceMainProject(projectObj) {
+    console.log(allProjects.#projectArray);
+    allProjects.#projectArray[0] = projectObj;
+    console.log(allProjects.#projectArray);
+  }
+  getCurrentProject() {
+    for(let i = 0;i<allProjects.#projectArray.length; i++)
+      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName)
+        return allProjects.#projectArray[i];
+  }
   getCurrentProjectIndex() {
-    for(let i = 0;i<allProjects.#projectArray.length; i++) {
-      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName) {
+    for(let i = 0;i<allProjects.#projectArray.length; i++)
+      if(allProjects.#projectArray[i].projectName === allProjects.#currentProjectName)
         return i;
-      }
-    }
   }
   setCurrentProject(project) {
     allProjects.#currentProjectName = project.projectName;
   }
   includesProject(projectName) {
-    if(allProjects.#projectArray.find(element => element.projectName === projectName) != undefined) {
+    if(allProjects.#projectArray.find(element => element.projectName === projectName) != undefined)
       return true;
-    } else {
+    else
       return false;
-    }
   }
 }
