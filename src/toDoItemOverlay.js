@@ -49,6 +49,7 @@ export function toDoItemOverlay(toDoItem, project) {
       generateContent(project);
       closeOverlay();
       toDoItemOverlay(toDoItem,project);
+      setLocalStorage();
       e.preventDefault()
     });
     //cancel element
@@ -83,6 +84,7 @@ export function toDoItemOverlay(toDoItem, project) {
       generateContent(project);
       closeOverlay();
       toDoItemOverlay(toDoItem,project);
+      setLocalStorage();
       e.preventDefault()
     });
     //cancel element
@@ -119,6 +121,7 @@ export function toDoItemOverlay(toDoItem, project) {
       generateContent(project);
       closeOverlay();
       toDoItemOverlay(toDoItem,project);
+      setLocalStorage();
       e.preventDefault()
     });
     //cancel element
@@ -160,6 +163,7 @@ export function toDoItemOverlay(toDoItem, project) {
       generateContent(project);
       closeOverlay();
       toDoItemOverlay(toDoItem,project);
+      setLocalStorage();
       e.preventDefault()
     });
     //cancel element

@@ -2,7 +2,7 @@ import { parse,format } from 'date-fns';
 import newToDoForm from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
 import { toDoItemOverlay } from "./toDoItemOverlay.js";
-import { persistData, setLocalStorage } from './webStorageFunc.js';
+import { setLocalStorage } from './webStorageFunc.js';
 
 export default function generateContent(project) {
   clearContent();
@@ -52,17 +52,28 @@ function toDoItems(project) {
     const checkBox = document.createElement("input");
     const checkBoxDiv = document.createElement("div");
     checkBox.setAttribute("type","checkbox");
+    if(element.checked) {
+      title.style.textDecoration = "line-through";
+      dueDate.style.textDecoration = "line-through";
+      checkBoxDiv.style.backgroundColor = "#E8fbc4";
+      div.style.borderColor = "#E8fbc4";
+      checkBox.checked = true;
+    }
     checkBox.addEventListener("change",(e) => {
       if(e.target.checked) {
         title.style.textDecoration = "line-through";
         dueDate.style.textDecoration = "line-through";
         checkBoxDiv.style.backgroundColor = "#E8fbc4";
         e.target.parentNode.parentNode.style.borderColor = "#E8fbc4";
+        element.changeCheckStatus();
+        setLocalStorage();
       } else {
         title.style.textDecoration = "none";
         dueDate.style.textDecoration = "none";
         checkBoxDiv.style.backgroundColor = "#f3cdd0";
         e.target.parentNode.parentNode.style.borderColor = "#f3cdd0";
+        element.changeCheckStatus();
+        setLocalStorage();
       }
     });
     checkBoxDiv.append(checkBox)

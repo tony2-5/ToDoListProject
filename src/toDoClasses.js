@@ -21,6 +21,7 @@ export class project {
 // toDoItem class allowing to create our toDo's
 export class toDoItem {
   static #lastKey = 0;
+  checked = 0;
   constructor(title, description, dueDate, priority) {
     this.key = toDoItem.#lastKey++;
     this.title = title;
@@ -39,6 +40,9 @@ export class toDoItem {
   }
   setPriority(priority) {
     this.priority = priority;
+  }
+  changeCheckStatus() {
+    this.checked = this.checked ? 0 : 1;
   }
 }
 
