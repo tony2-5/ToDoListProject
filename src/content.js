@@ -26,7 +26,7 @@ export function formSubmit(e) {
     addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), format(parse(formData.get("dueDate"), 'yyyy-mm-dd', new Date()),'mm/dd/yyyy'),formData.get("priority")));
   //update local storage
   setLocalStorage()
-  
+
   generateContent(allProject.getCurrentProject());
   e.target.form.reset();
 }
@@ -48,7 +48,26 @@ function toDoItems(project) {
     title.textContent = element.title;
     const dueDate = document.createElement("h2");
     dueDate.textContent = element.dueDate;
-    div.append(title, dueDate, overlayButton);
+
+    const checkBox = document.createElement("input");
+    const checkBoxDiv = document.createElement("div");
+    checkBox.setAttribute("type","checkbox");
+    checkBox.addEventListener("change",(e) => {
+      if(e.target.checked) {
+        title.style.textDecoration = "line-through";
+        dueDate.style.textDecoration = "line-through";
+        checkBoxDiv.style.backgroundColor = "#E8fbc4";
+        e.target.parentNode.parentNode.style.borderColor = "#E8fbc4";
+      } else {
+        title.style.textDecoration = "none";
+        dueDate.style.textDecoration = "none";
+        checkBoxDiv.style.backgroundColor = "#f3cdd0";
+        e.target.parentNode.parentNode.style.borderColor = "#f3cdd0";
+      }
+    });
+    checkBoxDiv.append(checkBox)
+
+    div.append(checkBoxDiv, title, dueDate, overlayButton);
     content.appendChild(div);
   });
 }
