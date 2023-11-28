@@ -3,6 +3,7 @@ import newToDoForm from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
 import { toDoItemOverlay } from "./toDoItemOverlay.js";
 import { setLocalStorage } from './webStorageFunc.js';
+import exclaimationImg from "./imgs/exclaimation.svg";
 
 export default function generateContent(project) {
   clearContent();
@@ -78,7 +79,27 @@ function toDoItems(project) {
     });
     checkBoxDiv.append(checkBox)
 
-    div.append(checkBoxDiv, title, dueDate, overlayButton);
+    let exclaimationAmount;
+    let colorStr;
+    if(element.priority === "highPriority") {
+      exclaimationAmount = 3;
+      colorStr = "invert(10%) sepia(77%) saturate(7299%) hue-rotate(4deg) brightness(89%) contrast(95%)";
+    } else if(element.priority === "medPriority") {
+      exclaimationAmount = 2;
+      colorStr = "invert(66%) sepia(63%) saturate(477%) hue-rotate(14deg) brightness(92%) contrast(91%)";
+    } else {
+      exclaimationAmount = 1;
+      colorStr = "invert(70%) sepia(35%) saturate(1109%) hue-rotate(60deg) brightness(88%) contrast(86%)";
+    }
+    const exclaimations = [];
+    for(let i=0; i<exclaimationAmount; i++) {
+      exclaimations.push(new Image(20,20));
+      exclaimations[i].src = exclaimationImg;
+      exclaimations[i].setAttribute("class","exclaimation");
+      exclaimations[i].style.filter = colorStr;
+    }
+    console.log(element.priority);
+    div.append(checkBoxDiv, ...exclaimations, title, dueDate, overlayButton);
     content.appendChild(div);
   });
 }

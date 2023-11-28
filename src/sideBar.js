@@ -38,7 +38,6 @@ function initializeDefaultProject() {
     // update local storage
     if(!localStorage.getItem("projects")) {
       defaultProject = new project("Main")
-      console.log("in func");
       allProject.addProject(defaultProject);
       setLocalStorage();
     } else {
