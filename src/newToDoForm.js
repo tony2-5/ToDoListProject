@@ -1,7 +1,7 @@
 import { formSubmit } from "./content.js";
 
 // generate toDoForm for each project
-export default function newToDoForm() {
+export function newToDoForm() {
   // elements
   const content = document.getElementById("content");
   const div = document.createElement("div");
@@ -26,6 +26,7 @@ export default function newToDoForm() {
   //input element attributes and label element attributes
   // title form input
   const titleDiv = document.createElement("div");
+  titleDiv.setAttribute("id","formTitleDiv");
   labelTitle.setAttribute("for","title");
   labelTitle.textContent = "Title: ";
   inputTitle.setAttribute("type","text");
@@ -70,4 +71,17 @@ export default function newToDoForm() {
 
   div.appendChild(form)
   content.appendChild(div);
+}
+export function validationPopup() {
+  const formTitleDiv = document.getElementById("formTitleDiv");
+  const p = document.createElement("p");
+  p.setAttribute("id","titleValidateMessage")
+  p.textContent = "Title cannot be empty";
+  formTitleDiv.appendChild(p);
+}
+export function removeValidationPopup() {
+  if(document.getElementById("titleValidateMessage") === null)
+    return;
+  else
+    document.getElementById("titleValidateMessage").remove();
 }

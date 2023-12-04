@@ -1,9 +1,10 @@
 import { parse,format } from 'date-fns';
-import newToDoForm from "./newToDoForm.js";
+import { validationPopup, removeValidationPopup, newToDoForm } from "./newToDoForm.js";
 import { allProjects, toDoItem } from "./toDoClasses.js";
 import { toDoItemOverlay } from "./toDoItemOverlay.js";
 import { setLocalStorage } from './webStorageFunc.js';
 import exclaimationImg from "./imgs/exclaimation.svg";
+import trashImg from "./imgs/trash.svg";
 
 export default function generateContent(project) {
   clearContent();
@@ -20,16 +21,21 @@ export function formSubmit(e) {
   e.preventDefault();
   const allProject= new allProjects();
   const formData = new FormData(e.target.form);
-  if(!formData.get("dueDate")) {
-    addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), null,formData.get("priority")));
-  }
-  else
-    addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), format(parse(formData.get("dueDate"), 'yyyy-mm-dd', new Date()),'mm/dd/yyyy'),formData.get("priority")));
-  //update local storage
-  setLocalStorage()
+  if(formData.get("title") === ""){
+    removeValidationPopup();
+    validationPopup();
+  }else {
+    removeValidationPopup();
+    if(!formData.get("dueDate"))
+      addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), null,formData.get("priority")));
+    else
+      addToDo(allProject.getCurrentProject(), new toDoItem(formData.get("title"), formData.get("description"), format(parse(formData.get("dueDate"), 'yyyy-mm-dd', new Date()),'mm/dd/yyyy'),formData.get("priority")));
+    //update local storage
+    setLocalStorage()
 
-  generateContent(allProject.getCurrentProject());
-  e.target.form.reset();
+    generateContent(allProject.getCurrentProject());
+    e.target.form.reset();
+  }
 }
 
 // display toDoItems in content area
@@ -93,13 +99,25 @@ function toDoItems(project) {
     }
     const exclaimations = [];
     for(let i=0; i<exclaimationAmount; i++) {
-      exclaimations.push(new Image(20,20));
+      exclaimations.push(new Image());
       exclaimations[i].src = exclaimationImg;
       exclaimations[i].setAttribute("class","exclaimation");
       exclaimations[i].style.filter = colorStr;
     }
-    console.log(element.priority);
-    div.append(checkBoxDiv, ...exclaimations, title, dueDate, overlayButton);
+
+    // trash icon for deleting 
+    const trash = new Image();
+    trash.src = trashImg;
+    trash.setAttribute("class","trashImg");
+    // event listener to delete todo item
+    trash.addEventListener("click", () => {
+      project.removeToDo(element);
+      //update local storage
+      setLocalStorage();
+      generateContent(project);
+    })
+
+    div.append(checkBoxDiv, ...exclaimations, title, dueDate, overlayButton, trash);
     content.appendChild(div);
   });
 }

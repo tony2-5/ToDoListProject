@@ -14,6 +14,10 @@ body {
     "sideBar content content content"
     "sideBar content content content";
 }
+textarea {
+  max-width: 25vw;
+  max-height: 30vh;
+}
 #header {
   grid-area: header;
   display: flex;
@@ -33,10 +37,23 @@ body {
   background-color: #E8F3FB;
   border: 3px solid #171819;
   align-items: center;
+  gap: 1vh;
 }
 #sideBar button {
   width: 15vw;
   height:5vh;
+}
+#sideBar div {
+  margin-top: 1vh;
+  padding: 1vw;
+  display: flex;
+  gap: 1vw;
+}
+#sideBar div>h3 {
+  margin:0;
+}
+#selectedProject {
+  border: 2px inset #bfbfd4;
 }
 #content {
   grid-area: content;
@@ -45,25 +62,71 @@ body {
   flex-direction: column;
   border: 3px solid #171819;
   gap: 1vh;
+  overflow: scroll;
 }
 .toDoItem {
   display: flex;
-  border-radius: 10px;
-  border-top: 2px solid #f3cdd0;
-  border-bottom: 2px solid #f3cdd0;
+  border-radius: 12px;
+  border-top: 3px solid #f3cdd0;
+  border-bottom: 3px solid #f3cdd0;
   align-items: center;
+  min-height: 7vh;
 }
 .toDoItem div {
   background-color: #f3cdd0;
   border-radius: 10px;
   display: flex;
-  height: 100%;
+  justify-content: center;
+  height: 90%;
+  width: 4vw;
+  align-items: center;
+  padding: 4px;
+}
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  height: auto;
+  border: 1px solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+input[type="checkbox"]::before {
+  content: "";
+  width: 1.3vw;
+  aspect-ratio: 1/1;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em green;
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
 }
 .toDoItem h2 {
-  margin:3vw;
+  margin-right:3vw;
+  margin-left:3vw;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
 }
 .toDoItem button {
-  margin: 3vw;
+  margin-right:3vw;
+  margin-left:3vw;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
+}
+#addToDo {
+  position:sticky;
+  top:0;
+  z-index: 1;
+  display: flex;
 }
 #addToDo form {
   flex-wrap: wrap;
@@ -76,6 +139,7 @@ body {
   gap: 3vw;
   display: flex;
   justify-content: center;
+  width:100vw;
 }
 #addToDo form div {
   display: flex;
@@ -84,8 +148,7 @@ body {
 }
 #addToDo form button {
   align-self: center;
-  width: 5vw;
-  height: 4vh;
+  padding: 5px;
 }
 #newProjectOverlay {
   position: absolute;
@@ -95,6 +158,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0,.7);
+  z-index: 1;
 }
 #newProjectOverlay form {
   display: flex;
@@ -108,9 +172,6 @@ body {
   display: flex;
   align-items: center;
 }
-#selectedProject {
-  border-style: inset;
-}
 #toDoOverlay {
   position: absolute;
   height: 100vh;
@@ -119,16 +180,19 @@ body {
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0,.7);
+  z-index: 1;
 }
 #toDoOverlayInnerDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: #E8F3FB;
   width: 25vw;
-  padding: 5vw;
+  max-height: 70vh;
+  padding: 3vw;
   border-radius: 10px;
-  z-index: 1;
+  z-index: 2;
+  gap:3vh;
 }
 #toDoOverlayInnerDiv div {
   display: flex;
@@ -137,4 +201,32 @@ body {
 }
 #toDoOverlayInnerDiv p {
   word-break: break-all;
+}
+#toDoOverlayInnerDiv div>form {
+  display: flex;
+  flex-direction: column;
+}
+.overlayTitleDiv {
+  display: flex;
+  flex-direction: column;
+  gap:0 !important;
+}
+.overlayTitleDiv * {
+  margin:0;
+  display: flex;
+}
+.trashImg {
+  height: 4vh;
+  width: auto;
+}
+.exclaimation {
+  width: 2vw;
+  height: auto;
+}
+#titleValidateMessage {
+  margin:0;
+  margin-top: 2px;
+  color: black;
+  background-color: yellow;
+  font-weight: bold;
 }

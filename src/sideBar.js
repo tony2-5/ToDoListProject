@@ -94,8 +94,9 @@ function displayProjects() {
     if(element.projectName === "Main")
       return;
     const div = document.createElement("div");
-    const trash = new Image(20,20);
+    const trash = new Image();
     trash.src = trashImg;
+    trash.setAttribute("class","trashImg");
 
     // event listener for deleting projects
     // if project currently on deleted defaults to Main, otherwise stays on current project

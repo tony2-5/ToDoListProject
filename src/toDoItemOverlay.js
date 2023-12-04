@@ -10,8 +10,9 @@ export function toDoItemOverlay(toDoItem, project) {
   div.setAttribute("id","toDoOverlay");
 
   // trash icon for deleting 
-  const trash = new Image(20,20);
+  const trash = new Image();
   trash.src = trashImg;
+  trash.setAttribute("class","trashImg");
   // event listener to delete todo item
   trash.addEventListener("click", () => {
     closeOverlay()
@@ -33,14 +34,21 @@ export function toDoItemOverlay(toDoItem, project) {
 
   //toDo item title
   const titleDiv = document.createElement("div");
-  const title = document.createElement("h2");
+  const titleLabelDiv = document.createElement("div");
+  const titleLabel = document.createElement("h3");
+  const title = document.createElement("p");
+  titleLabelDiv.setAttribute("class","overlayTitleDiv");
+
+  titleLabel.textContent = "Title:"
   title.textContent = toDoItem.title;
+  titleLabelDiv.append(titleLabel,title);
   editButtonArr[0].addEventListener("click", () => {
     // form
     const form = document.createElement("form");
     // input element for updating data
     const input = document.createElement("input");
     input.setAttribute("type","text");
+    input.defaultValue = toDoItem.title;
     // update element
     const update = document.createElement("button");
     update.textContent = "Update";
@@ -56,19 +64,25 @@ export function toDoItemOverlay(toDoItem, project) {
     const cancel = document.createElement("button");
     cancel.textContent = "Cancel";
     cancel.addEventListener("click", (e) => {
-      titleDiv.replaceChildren(title, editButtonArr[0]);
+      titleDiv.replaceChildren(titleLabelDiv, editButtonArr[0]);
       e.preventDefault();
     });
 
     form.append(input,update,cancel);
     titleDiv.replaceChildren(form);
   });
-  titleDiv.append(title, editButtonArr[0]);
+  titleDiv.append(titleLabelDiv, editButtonArr[0]);
 
   //toDo item description
   const descDiv = document.createElement("div");
+  const descLabelDiv = document.createElement("div");
+  const descLabel = document.createElement("h3");
   const description = document.createElement("p");
+  descLabelDiv.setAttribute("class","overlayTitleDiv");
+
+  descLabel.textContent = "Description:"
   description.textContent = toDoItem.description;
+  descLabelDiv.append(descLabel,description);
   editButtonArr[1].addEventListener("click", () => {
     // form
     const form = document.createElement("form");
@@ -76,6 +90,7 @@ export function toDoItemOverlay(toDoItem, project) {
     const textarea = document.createElement("textarea");
     textarea.setAttribute("rows","3");
     textarea.setAttribute("cols","20");
+    textarea.defaultValue = toDoItem.description;
     // update element
     const update = document.createElement("button");
     update.textContent = "Update";
@@ -91,19 +106,29 @@ export function toDoItemOverlay(toDoItem, project) {
     const cancel = document.createElement("button");
     cancel.textContent = "Cancel";
     cancel.addEventListener("click", (e) => {
-      titleDiv.replaceChildren(description, editButtonArr[1]);
+      descDiv.replaceChildren(descLabelDiv, editButtonArr[1]);
       e.preventDefault();
     });
 
     form.append(textarea,update,cancel);
     descDiv.replaceChildren(form);
   });
-  descDiv.append(description, editButtonArr[1]);
+  descDiv.append(descLabelDiv, editButtonArr[1]);
 
   //toDo item dueDate
   const dueDateDiv = document.createElement("div");
-  const dueDate = document.createElement("h2");
-  dueDate.textContent = toDoItem.dueDate;
+  const dueDate = document.createElement("p");
+  const dateLabelDiv = document.createElement("div");
+  const dateLabel = document.createElement("h3");
+  dateLabelDiv.setAttribute("class","overlayTitleDiv");
+
+  dateLabel.textContent = "Due Date:"
+  console.log(toDoItem.dueDate);
+  if(toDoItem.dueDate === null)
+    dueDate.textContent = "No date set";
+  else
+    dueDate.textContent = toDoItem.dueDate;
+  dateLabelDiv.append(dateLabel,dueDate);
   editButtonArr[2].addEventListener("click", () => {
     // form
     const form = document.createElement("form");
@@ -128,18 +153,29 @@ export function toDoItemOverlay(toDoItem, project) {
     const cancel = document.createElement("button");
     cancel.textContent = "Cancel";
     cancel.addEventListener("click", (e) => {
-      titleDiv.replaceChildren(dueDate, editButtonArr[2]);
+      dueDateDiv.replaceChildren(dateLabelDiv, editButtonArr[2]);
       e.preventDefault();
     });
     form.append(input,update,cancel);
     dueDateDiv.replaceChildren(form);
   });
-  dueDateDiv.append(dueDate, editButtonArr[2]);
+  dueDateDiv.append(dateLabelDiv, editButtonArr[2]);
 
   //toDo item priority
   const priorityDiv = document.createElement("div");
-  const priority =  document.createElement("h2");
-  priority.textContent = toDoItem.priority;
+  const priority =  document.createElement("p");
+  const priorityLabelDiv = document.createElement("div");
+  const priorityLabel = document.createElement("h3");
+  priorityLabelDiv.setAttribute("class","overlayTitleDiv");
+
+  priorityLabel.textContent = "Priority:"
+  if(toDoItem.priority === "highPriority")
+    priority.textContent = "High";
+  else if(toDoItem.priority === "medPriority")
+    priority.textContent = "Medium";
+  else
+    priority.textContent = "Low";
+  priorityLabelDiv.append(priorityLabel, priority);
   editButtonArr[3].addEventListener("click", () => {
     // form
     const form = document.createElement("form");
@@ -170,13 +206,13 @@ export function toDoItemOverlay(toDoItem, project) {
     const cancel = document.createElement("button");
     cancel.textContent = "Cancel";
     cancel.addEventListener("click", (e) => {
-      titleDiv.replaceChildren(dueDate, editButtonArr[3]);
+      priorityDiv.replaceChildren(priorityLabelDiv, editButtonArr[3]);
       e.preventDefault();
     });
     form.append(select,update,cancel);
     priorityDiv.replaceChildren(form);
   });
-  priorityDiv.append(priority, editButtonArr[3]);
+  priorityDiv.append(priorityLabelDiv, editButtonArr[3]);
 
   //close overlay
   const closeButton = document.createElement("button");
