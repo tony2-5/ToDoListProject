@@ -1,22 +1,36 @@
 html {
   height: 100vh;
   width: 100vw;
+  color:#171819;
 }
 body {
   margin:0;
   display: grid;
-  grid-template-columns: repeat(4, 25vw);
-  grid-template-rows: repeat(5, 20vh);
+  grid-template-columns: repeat(5, 20vw);
+  grid-template-rows: repeat(8, 12.5vh);
   grid-template-areas: 
-    "header header header header"
-    "sideBar content content content"
-    "sideBar content content content"
-    "sideBar content content content"
-    "sideBar content content content";
+    "header header header header header"
+    "sideBar content content content content"
+    "sideBar content content content content"
+    "sideBar content content content content"
+    "sideBar content content content content"
+    "sideBar content content content content"
+    "sideBar content content content content"
+    "sideBar content content content content";
 }
 textarea {
   max-width: 25vw;
   max-height: 30vh;
+}
+button {
+  background-color: white;
+  border: 2px #171819 solid;
+  padding: 4px;
+  border-radius: 4px;
+}
+button:hover {
+  box-shadow: 1px 2px 2px #171819;
+  cursor: pointer;
 }
 #header {
   grid-area: header;
@@ -24,45 +38,69 @@ textarea {
   justify-content: center;
   align-items: center;
   gap: 2vw;
-  background-color: #E8F3FB;
-  border: 3px solid #171819;
+  background-color: #e8f4f6;
+  box-shadow: 1px 2px 2px black;
+    z-index: 1;
 }
-#header div>img {
+#header>div {
+  flex: 1 1;
+}
+#middleHeaderDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#middleHeaderDiv div>img {
   height: 10vh;
+}
+#gitHubDiv {
+  display: flex;
+  justify-content: right;
+  margin-right: 5vw;
+}
+#gitHubDiv img {
+  height: 8vh;
+  aspect-ratio: 1;
+  cursor: pointer;
 }
 #sideBar {
   display: flex;
   flex-direction: column;
   grid-area: sideBar;
-  background-color: #E8F3FB;
-  border: 3px solid #171819;
+  background-color: #e8f4f6;
   align-items: center;
   gap: 1vh;
+  box-shadow: 1px 6px 3px black;
+  z-index: 1;
 }
 #sideBar button {
   width: 15vw;
-  height:5vh;
+  aspect-ratio: 4;
 }
 #sideBar div {
   margin-top: 1vh;
   padding: 1vw;
   display: flex;
   gap: 1vw;
+  justify-content: center;
 }
 #sideBar div>h3 {
   margin:0;
+  overflow-wrap: anywhere;
 }
 #selectedProject {
   border: 2px inset #bfbfd4;
+  border-radius: 4px;
 }
 #content {
   grid-area: content;
-  background-color: #E8F3FB;
+  background-color: #f4f9fb;
   display: flex;
   flex-direction: column;
-  border: 3px solid #171819;
   gap: 1vh;
   overflow: scroll;
+  padding-left: 12px;
+  padding-top:12px;
 }
 .toDoItem {
   display: flex;
@@ -84,7 +122,7 @@ textarea {
 }
 input[type="checkbox"] {
   appearance: none;
-  background-color: #fff;
+  background-color: #f4f9fb;
   margin: 0;
   font: inherit;
   color: currentColor;
@@ -161,16 +199,42 @@ input[type="checkbox"]:checked::before {
   z-index: 1;
 }
 #newProjectOverlay form {
+  background-color: #f4f9fb;
+  padding: 12vh;
   display: flex;
   flex-direction: column;
+  border-radius: 12px;
+  align-items: center;
+}
+#newProjectOverlay label {
+  margin-bottom: 1vh;
+  font-size: larger;
+  font-weight: bold;
+}
+#newProjectOverlay input {
+  width: 15vw;
+  height: 3vh;
 }
 #newProjectOverlay button {
   width: 15vw;
   height: 3vh;
+  margin:1px;
 }
 .projects {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.projects:hover {
+  cursor:pointer;
+  border: 1px black solid;
+  border-radius: 4px;
+}
+.defaultProject:hover {
+  cursor:pointer;
+  border: 1px black solid;
+  border-radius: 4px;
 }
 #toDoOverlay {
   position: absolute;
@@ -186,7 +250,7 @@ input[type="checkbox"]:checked::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #E8F3FB;
+  background-color: #f4f9fb;
   width: 25vw;
   max-height: 70vh;
   padding: 3vw;
@@ -206,12 +270,14 @@ input[type="checkbox"]:checked::before {
   display: flex;
   flex-direction: column;
 }
-.overlayTitleDiv {
+.overlayItemsDiv {
   display: flex;
   flex-direction: column;
   gap:0 !important;
+  max-height: 30vh;
+  overflow: scroll;
 }
-.overlayTitleDiv * {
+.overlayItemsDiv * {
   margin:0;
   display: flex;
 }
@@ -226,7 +292,7 @@ input[type="checkbox"]:checked::before {
 #titleValidateMessage {
   margin:0;
   margin-top: 2px;
-  color: black;
+  color: #171819;
   background-color: yellow;
   font-weight: bold;
 }

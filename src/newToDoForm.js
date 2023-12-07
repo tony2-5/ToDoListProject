@@ -31,6 +31,7 @@ export function newToDoForm() {
   labelTitle.textContent = "Title: ";
   inputTitle.setAttribute("type","text");
   inputTitle.setAttribute("name","title");
+  inputTitle.setAttribute("maxLength",35);
   titleDiv.append(labelTitle,inputTitle);
 
   //description area for form

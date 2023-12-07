@@ -125,8 +125,7 @@ function displayProjects() {
     div.setAttribute("class","projects");
 
     // event listener to generate todo items for project in content
-    h3.addEventListener("click",() => {
-      console.log(element);
+    div.addEventListener("click",() => {
       document.querySelector("#selectedProject").removeAttribute("id");
       currentSelectedProject(element)
       // reinitializes id attribute for our current selected project
@@ -134,7 +133,6 @@ function displayProjects() {
       if(projects.getCurrentProjectIndex() !== 0) {
         document.getElementById("sideBar").children[1+projects.getCurrentProjectIndex()].setAttribute("id","selectedProject");
       }
-      console.log(element);
       generateContent(element)
     });
     div.append(h3, trash);

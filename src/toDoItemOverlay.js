@@ -37,7 +37,7 @@ export function toDoItemOverlay(toDoItem, project) {
   const titleLabelDiv = document.createElement("div");
   const titleLabel = document.createElement("h3");
   const title = document.createElement("p");
-  titleLabelDiv.setAttribute("class","overlayTitleDiv");
+  titleLabelDiv.setAttribute("class","overlayItemsDiv");
 
   titleLabel.textContent = "Title:"
   title.textContent = toDoItem.title;
@@ -78,7 +78,7 @@ export function toDoItemOverlay(toDoItem, project) {
   const descLabelDiv = document.createElement("div");
   const descLabel = document.createElement("h3");
   const description = document.createElement("p");
-  descLabelDiv.setAttribute("class","overlayTitleDiv");
+  descLabelDiv.setAttribute("class","overlayItemsDiv");
 
   descLabel.textContent = "Description:"
   description.textContent = toDoItem.description;
@@ -120,7 +120,7 @@ export function toDoItemOverlay(toDoItem, project) {
   const dueDate = document.createElement("p");
   const dateLabelDiv = document.createElement("div");
   const dateLabel = document.createElement("h3");
-  dateLabelDiv.setAttribute("class","overlayTitleDiv");
+  dateLabelDiv.setAttribute("class","overlayItemsDiv");
 
   dateLabel.textContent = "Due Date:"
   console.log(toDoItem.dueDate);
@@ -166,7 +166,7 @@ export function toDoItemOverlay(toDoItem, project) {
   const priority =  document.createElement("p");
   const priorityLabelDiv = document.createElement("div");
   const priorityLabel = document.createElement("h3");
-  priorityLabelDiv.setAttribute("class","overlayTitleDiv");
+  priorityLabelDiv.setAttribute("class","overlayItemsDiv");
 
   priorityLabel.textContent = "Priority:"
   if(toDoItem.priority === "highPriority")

@@ -17,6 +17,7 @@ export default function newProjectOverlay() {
   //input element attributes
   input.setAttribute("type","text");
   input.setAttribute("name","projectName");
+  input.setAttribute("maxLength","35");
 
   //label element attributes
   label.setAttribute("for","projectName");
